@@ -3,10 +3,11 @@ const router = express.Router();
 const { body, query } = require("express-validator");
 const taskController = require("../controllers/taskController");
 const auth = require("../middleware/auth");
+const { validate } = require("../middleware/validation");
 
 router.use(auth);
 
-// GET /api/tasks?search=&status=&priority=&completed=&page=&limit=
+// GET /api/tasks?search=&status=&priority=&completed=&tags=&sortBy=&sortOrder=
 router.get(
 	"/",
 	[
@@ -14,7 +15,13 @@ router.get(
 		query("status").optional().isIn(["todo", "in-progress", "done"]),
 		query("priority").optional().isIn(["low", "medium", "high"]),
 		query("completed").optional().isBoolean(),
+		query("tags").optional().isString(),
+		query("sortBy")
+			.optional()
+			.isIn(["title", "dueDate", "priority", "status", "createdAt"]),
+		query("sortOrder").optional().isIn(["asc", "desc"]),
 	],
+	validate,
 	taskController.listTasks
 );
 
@@ -26,7 +33,9 @@ router.post(
 		body("description").optional().isString(),
 		body("priority").optional().isIn(["low", "medium", "high"]),
 		body("status").optional().isIn(["todo", "in-progress", "done"]),
+		body("tags").optional().isArray(),
 	],
+	validate,
 	taskController.createTask
 );
 
@@ -40,7 +49,9 @@ router.put(
 		body("title").optional().isLength({ min: 1 }),
 		body("priority").optional().isIn(["low", "medium", "high"]),
 		body("status").optional().isIn(["todo", "in-progress", "done"]),
+		body("tags").optional().isArray(),
 	],
+	validate,
 	taskController.updateTask
 );
 

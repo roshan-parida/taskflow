@@ -12,8 +12,15 @@ const userSchema = new mongoose.Schema(
 		},
 		password: { type: String, required: true },
 		bio: { type: String, default: "" },
+		avatar: { type: String, default: "" },
+		isEmailVerified: { type: Boolean, default: false },
+		emailVerificationToken: String,
+		resetPasswordToken: String,
+		resetPasswordExpires: Date,
 	},
 	{ timestamps: true }
 );
+
+userSchema.index({ createdAt: 1 });
 
 module.exports = mongoose.model("User", userSchema);

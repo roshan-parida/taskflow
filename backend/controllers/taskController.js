@@ -8,11 +8,21 @@ exports.listTasks = async (req, res, next) => {
 
 	try {
 		const userId = req.user.userId;
-		const { search, status, priority, completed } = req.query;
-		const page = parseInt(req.query.page) || 1;
+		const {
+			search,
+			status,
+			priority,
+			completed,
+			tags,
+			sortBy = "createdAt",
+			sortOrder = "desc",
+		} = req.query;
+
+		const page = Math.max(parseInt(req.query.page) || 1, 1);
 		const limit = Math.min(parseInt(req.query.limit) || 20, 100);
 
-		const filter = { user: userId };
+		const filter = { user: userId, isDeleted: false };
+
 		if (search) {
 			const re = new RegExp(search, "i");
 			filter.$or = [{ title: re }, { description: re }];
@@ -21,14 +31,28 @@ exports.listTasks = async (req, res, next) => {
 		if (priority) filter.priority = priority;
 		if (completed !== undefined)
 			filter.completed = completed === "true" || completed === true;
+		if (tags) {
+			const tagArray = Array.isArray(tags) ? tags : tags.split(",");
+			filter.tags = { $in: tagArray };
+		}
+
+		const sort = {};
+		sort[sortBy] = sortOrder === "asc" ? 1 : -1;
 
 		const total = await Task.countDocuments(filter);
 		const tasks = await Task.find(filter)
-			.sort({ createdAt: -1 })
+			.sort(sort)
 			.skip((page - 1) * limit)
-			.limit(limit);
+			.limit(limit)
+			.select("-isDeleted");
 
-		res.json({ tasks, total, page, limit });
+		res.json({
+			tasks,
+			total,
+			page,
+			limit,
+			totalPages: Math.ceil(total / limit),
+		});
 	} catch (err) {
 		next(err);
 	}
@@ -41,7 +65,8 @@ exports.createTask = async (req, res, next) => {
 
 	try {
 		const userId = req.user.userId;
-		const { title, description, priority, status, dueDate } = req.body;
+		const { title, description, priority, status, dueDate, tags } =
+			req.body;
 
 		const task = new Task({
 			user: userId,
@@ -50,9 +75,14 @@ exports.createTask = async (req, res, next) => {
 			priority,
 			status,
 			dueDate,
+			tags: tags || [],
 		});
 		await task.save();
-		res.status(201).json(task);
+
+		const taskResponse = task.toObject();
+		delete taskResponse.isDeleted;
+
+		res.status(201).json(taskResponse);
 	} catch (err) {
 		next(err);
 	}
@@ -60,11 +90,19 @@ exports.createTask = async (req, res, next) => {
 
 exports.getTask = async (req, res, next) => {
 	try {
-		const task = await Task.findById(req.params.id);
+		const task = await Task.findOne({
+			_id: req.params.id,
+			isDeleted: false,
+		});
+
 		if (!task) return res.status(404).json({ message: "Task not found" });
 		if (task.user.toString() !== req.user.userId)
 			return res.status(403).json({ message: "Unauthorized" });
-		res.json(task);
+
+		const taskResponse = task.toObject();
+		delete taskResponse.isDeleted;
+
+		res.json(taskResponse);
 	} catch (err) {
 		next(err);
 	}
@@ -76,15 +114,31 @@ exports.updateTask = async (req, res, next) => {
 		return res.status(400).json({ errors: errors.array() });
 
 	try {
-		const task = await Task.findById(req.params.id);
+		const task = await Task.findOne({
+			_id: req.params.id,
+			isDeleted: false,
+		});
+
 		if (!task) return res.status(404).json({ message: "Task not found" });
 		if (task.user.toString() !== req.user.userId)
 			return res.status(403).json({ message: "Unauthorized" });
 
 		const updates = req.body;
+
+		if (
+			updates.completed !== undefined &&
+			updates.completed !== task.completed
+		) {
+			updates.completedAt = updates.completed ? new Date() : null;
+		}
+
 		Object.assign(task, updates);
 		await task.save();
-		res.json(task);
+
+		const taskResponse = task.toObject();
+		delete taskResponse.isDeleted;
+
+		res.json(taskResponse);
 	} catch (err) {
 		next(err);
 	}
@@ -92,12 +146,18 @@ exports.updateTask = async (req, res, next) => {
 
 exports.deleteTask = async (req, res, next) => {
 	try {
-		const task = await Task.findById(req.params.id);
+		const task = await Task.findOne({
+			_id: req.params.id,
+			isDeleted: false,
+		});
+
 		if (!task) return res.status(404).json({ message: "Task not found" });
 		if (task.user.toString() !== req.user.userId)
 			return res.status(403).json({ message: "Unauthorized" });
 
-		await task.deleteOne();
+		task.isDeleted = true;
+		await task.save();
+
 		res.json({ message: "Task deleted" });
 	} catch (err) {
 		next(err);

@@ -1,6 +1,7 @@
 const { validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const crypto = require("crypto");
 const User = require("../models/User");
 
 exports.signup = async (req, res, next) => {
@@ -16,10 +17,15 @@ exports.signup = async (req, res, next) => {
 				.status(400)
 				.json({ message: "Email already registered" });
 
-		const salt = await bcrypt.genSalt(10);
+		const salt = await bcrypt.genSalt(12);
 		const hashed = await bcrypt.hash(password, salt);
 
-		user = new User({ name, email, password: hashed });
+		user = new User({
+			name,
+			email,
+			password: hashed,
+			emailVerificationToken: crypto.randomBytes(32).toString("hex"),
+		});
 		await user.save();
 
 		const payload = { userId: user._id };
@@ -27,7 +33,14 @@ exports.signup = async (req, res, next) => {
 			expiresIn: process.env.JWT_EXPIRES_IN || "7d",
 		});
 
-		res.status(201).json({ token });
+		res.status(201).json({
+			token,
+			user: {
+				id: user._id,
+				name: user.name,
+				email: user.email,
+			},
+		});
 	} catch (err) {
 		next(err);
 	}
@@ -53,7 +66,14 @@ exports.login = async (req, res, next) => {
 			expiresIn: process.env.JWT_EXPIRES_IN || "7d",
 		});
 
-		res.json({ token });
+		res.json({
+			token,
+			user: {
+				id: user._id,
+				name: user.name,
+				email: user.email,
+			},
+		});
 	} catch (err) {
 		next(err);
 	}
