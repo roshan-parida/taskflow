@@ -1,7 +1,104 @@
 @import "tailwindcss";
 
-html,
-body,
-#root {
-	height: 100%;
+/* Custom styles for form elements */
+@layer components {
+	/* Select dropdown styling */
+	.select-custom {
+		@apply px-4 py-3 bg-white/50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 backdrop-blur-sm text-gray-900 dark:text-white appearance-none cursor-pointer;
+		background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+		background-position: right 0.75rem center;
+		background-repeat: no-repeat;
+		background-size: 1.5em 1.5em;
+		padding-right: 2.5rem;
+	}
+
+	.dark .select-custom {
+		background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%239ca3af' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+	}
+
+	.select-custom:hover {
+		@apply border-gray-300 dark:border-gray-500;
+	}
+
+	/* Calendar input styling */
+	.date-custom {
+		@apply px-4 py-3 bg-white/50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 backdrop-blur-sm text-gray-900 dark:text-white appearance-none cursor-pointer;
+		background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b7280'%3e%3cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z'/%3e%3c/svg%3e");
+		background-position: right 0.75rem center;
+		background-repeat: no-repeat;
+		background-size: 1.25em 1.25em;
+		padding-right: 2.5rem;
+	}
+
+	.dark .date-custom {
+		background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%239ca3af'%3e%3cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z'/%3e%3c/svg%3e");
+	}
+
+	.date-custom:hover {
+		@apply border-gray-300 dark:border-gray-500;
+	}
+
+	/* Remove default calendar icon in Webkit browsers */
+	.date-custom::-webkit-calendar-picker-indicator {
+		background: transparent;
+		bottom: 0;
+		color: transparent;
+		cursor: pointer;
+		height: auto;
+		left: 0;
+		position: absolute;
+		right: 0;
+		top: 0;
+		width: auto;
+	}
+
+	/* Style the dropdown options */
+	.select-custom option {
+		@apply bg-white dark:bg-gray-700 text-gray-900 dark:text-white py-2;
+	}
+
+	.select-custom option:hover {
+		@apply bg-blue-100 dark:bg-blue-600;
+	}
+
+	/* Focus states */
+	.select-custom:focus,
+	.date-custom:focus {
+		@apply outline-none ring-2 ring-blue-500 border-blue-500;
+	}
+
+	/* Disabled state */
+	.select-custom:disabled,
+	.date-custom:disabled {
+		@apply opacity-50 cursor-not-allowed bg-gray-100 dark:bg-gray-800;
+	}
+}
+
+/* Custom scrollbar for dropdowns */
+@layer utilities {
+	.scrollbar-thin {
+		scrollbar-width: thin;
+		scrollbar-color: rgb(156 163 175) transparent;
+	}
+
+	.dark .scrollbar-thin {
+		scrollbar-color: rgb(75 85 99) transparent;
+	}
+
+	/* Webkit scrollbar styling */
+	::-webkit-scrollbar {
+		width: 6px;
+	}
+
+	::-webkit-scrollbar-track {
+		@apply bg-gray-600;
+	}
+
+	::-webkit-scrollbar-thumb {
+		@apply bg-gray-400;
+	}
+
+	::-webkit-scrollbar-thumb:hover {
+		@apply bg-gray-500;
+	}
 }

@@ -3,12 +3,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import api from "../../lib/api";
 import { useAuth } from "../../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Mail, Lock, User, Eye, EyeOff, UserPlus } from "lucide-react";
 
 const schema = z.object({
-	name: z.string().min(2),
-	email: z.email(),
-	password: z.string().min(6),
+	name: z.string().min(2, "Name must be at least 2 characters"),
+	email: z.string().email("Invalid email address"),
+	password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
 type FormType = z.infer<typeof schema>;
@@ -21,6 +23,7 @@ export default function SignupPage() {
 	} = useForm<FormType>({ resolver: zodResolver(schema) });
 	const { login } = useAuth();
 	const navigate = useNavigate();
+	const [showPassword, setShowPassword] = useState(false);
 
 	const onSubmit = async (data: FormType) => {
 		try {
@@ -33,49 +36,106 @@ export default function SignupPage() {
 	};
 
 	return (
-		<form
-			onSubmit={handleSubmit(onSubmit)}
-			className="bg-white shadow rounded p-6"
-		>
-			<h2 className="text-lg font-medium mb-4">Create an account</h2>
-			<label className="block mb-3">
-				<span className="text-sm">Name</span>
-				<input
-					className="mt-1 block w-full rounded border-gray-300"
-					{...register("name")}
-				/>
-				<p className="text-xs text-red-500">
-					{errors.name?.message as string}
-				</p>
-			</label>
-			<label className="block mb-3">
-				<span className="text-sm">Email</span>
-				<input
-					className="mt-1 block w-full rounded border-gray-300"
-					{...register("email")}
-				/>
-				<p className="text-xs text-red-500">
-					{errors.email?.message as string}
-				</p>
-			</label>
-			<label className="block mb-3">
-				<span className="text-sm">Password</span>
-				<input
-					type="password"
-					className="mt-1 block w-full rounded border-gray-300"
-					{...register("password")}
-				/>
-				<p className="text-xs text-red-500">
-					{errors.password?.message as string}
-				</p>
-			</label>
+		<form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+			<div className="space-y-5">
+				{/* Name Field */}
+				<div className="space-y-2">
+					<label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+						Full Name
+					</label>
+					<div className="relative">
+						<User className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+						<input
+							{...register("name")}
+							type="text"
+							placeholder="Enter your full name"
+							className="w-full pl-12 pr-4 py-3.5 bg-white/50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 backdrop-blur-sm text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+						/>
+					</div>
+					{errors.name && (
+						<p className="text-sm text-red-500 dark:text-red-400">
+							{errors.name.message}
+						</p>
+					)}
+				</div>
 
+				{/* Email Field */}
+				<div className="space-y-2">
+					<label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+						Email Address
+					</label>
+					<div className="relative">
+						<Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+						<input
+							{...register("email")}
+							type="email"
+							placeholder="your@email.com"
+							className="w-full pl-12 pr-4 py-3.5 bg-white/50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 backdrop-blur-sm text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+						/>
+					</div>
+					{errors.email && (
+						<p className="text-sm text-red-500 dark:text-red-400">
+							{errors.email.message}
+						</p>
+					)}
+				</div>
+
+				{/* Password Field */}
+				<div className="space-y-2">
+					<label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+						Password
+					</label>
+					<div className="relative">
+						<Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+						<input
+							type={showPassword ? "text" : "password"}
+							{...register("password")}
+							placeholder="Create a strong password"
+							className="w-full pl-12 pr-12 py-3.5 bg-white/50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 backdrop-blur-sm text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+						/>
+						<button
+							type="button"
+							onClick={() => setShowPassword(!showPassword)}
+							className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+						>
+							{showPassword ? (
+								<EyeOff className="h-5 w-5" />
+							) : (
+								<Eye className="h-5 w-5" />
+							)}
+						</button>
+					</div>
+					{errors.password && (
+						<p className="text-sm text-red-500 dark:text-red-400">
+							{errors.password.message}
+						</p>
+					)}
+				</div>
+			</div>
+
+			{/* Submit Button */}
 			<button
 				disabled={isSubmitting}
-				className="w-full bg-indigo-600 text-white py-2 rounded"
+				className="w-full flex items-center justify-center space-x-3 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-4 px-6 rounded-xl shadow-lg transform transition-all duration-200 hover:scale-105 active:scale-95 disabled:opacity-50 disabled:hover:scale-100 disabled:cursor-not-allowed"
 			>
-				Sign up
+				<UserPlus className="w-5 h-5" />
+				<span>
+					{isSubmitting ? "Creating Account..." : "Create Account"}
+				</span>
 			</button>
+
+			{/* Login Link */}
+			<div className="text-center pt-4">
+				<p className="text-sm text-gray-600 dark:text-gray-400">
+					Already have an account?{" "}
+					<Link
+						to="/login"
+						className="text-blue-600 dark:text-blue-400 font-semibold hover:text-blue-700 dark:hover:text-blue-300 transition-colors"
+					>
+						Sign in
+					</Link>
+				</p>
+			</div>
 		</form>
 	);
 }
