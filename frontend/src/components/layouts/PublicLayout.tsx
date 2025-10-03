@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import { CheckSquare, Sparkles, Zap, Shield, Clock } from "lucide-react";
+import { CheckSquare, Zap, Shield, Clock } from "lucide-react";
 
 export default function PublicLayout() {
 	return (
@@ -41,7 +41,7 @@ export default function PublicLayout() {
 								TaskFlow
 							</h1>
 							<p className="text-lg text-gray-600 dark:text-gray-400 mt-2">
-								Enterprise-grade task management
+								Task Manger for your daily routine
 							</p>
 						</div>
 					</div>
@@ -82,17 +82,6 @@ export default function PublicLayout() {
 								</p>
 							</div>
 						</div>
-					</div>
-
-					<div className="flex items-center space-x-6 text-sm text-gray-500 dark:text-gray-400">
-						<div className="flex items-center space-x-2">
-							<Sparkles className="w-4 h-4 text-purple-500" />
-							<span>Trusted by 10,000+ teams</span>
-						</div>
-						<div>•</div>
-						<span>99.9% Uptime</span>
-						<div>•</div>
-						<span>24/7 Support</span>
 					</div>
 				</div>
 

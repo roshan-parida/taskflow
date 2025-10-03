@@ -57,7 +57,7 @@ export default function TaskForm({ onCreated }: any) {
 			<div className="grid grid-cols-2 gap-3">
 				<div className="space-y-1.5">
 					<label className="text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wide flex items-center space-x-1">
-						<Flag className="w-3 h-3" />
+						<Flag className="w-3 h-3 z-10" />
 						<span>Priority</span>
 					</label>
 					<select
@@ -73,7 +73,7 @@ export default function TaskForm({ onCreated }: any) {
 
 				<div className="space-y-1.5">
 					<label className="text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wide flex items-center space-x-1">
-						<Circle className="w-3 h-3" />
+						<Circle className="w-3 h-3 z-10" />
 						<span>Status</span>
 					</label>
 					<select
@@ -91,7 +91,7 @@ export default function TaskForm({ onCreated }: any) {
 			{/* Due Date */}
 			<div className="space-y-1.5">
 				<label className="text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wide flex items-center space-x-1">
-					<Calendar className="w-3 h-3" />
+					<Calendar className="w-3 h-3 z-10" />
 					<span>Due Date</span>
 				</label>
 				<input
@@ -108,7 +108,7 @@ export default function TaskForm({ onCreated }: any) {
 					disabled={isSubmitting}
 					className="w-full flex items-center justify-center space-x-2 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-medium py-2.5 px-4 rounded-xl shadow-lg transform hover:cursor-pointer transition-all duration-200 disabled:opacity-50 disabled:hover:scale-100 disabled:cursor-not-allowed text-sm"
 				>
-					<Plus className="w-4 h-4" />
+					<Plus className="w-4 h-4 z-10" />
 					<span>{isSubmitting ? "Creating..." : "Create Task"}</span>
 				</button>
 			</div>

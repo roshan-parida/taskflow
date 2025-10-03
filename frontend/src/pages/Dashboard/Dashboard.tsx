@@ -101,7 +101,7 @@ export default function Dashboard() {
 							onClick={() => setShowMobileForm(!showMobileForm)}
 							className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 font-medium"
 						>
-							<Plus className="w-4 h-4" />
+							<Plus className="w-4 h-4 z-10" />
 							<span>New Task</span>
 						</button>
 					</div>
@@ -129,7 +129,7 @@ export default function Dashboard() {
 				<div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl shadow-lg p-6 space-y-4">
 					{/* Search Bar */}
 					<div className="relative">
-						<Search className="absolute left-3 top-3.5 h-5 w-5 text-gray-400" />
+						<Search className="absolute left-3 top-3.5 h-5 w-5 text-gray-400 z-10" />
 						<input
 							placeholder="Search tasks by title or description..."
 							value={query.search}
@@ -143,7 +143,7 @@ export default function Dashboard() {
 					{/* Filters */}
 					<div className="flex flex-wrap items-center gap-4">
 						<div className="flex items-center space-x-2 flex-shrink-0">
-							<Filter className="text-gray-400 h-5 w-5" />
+							<Filter className="text-gray-400 h-5 w-5 z-10" />
 							<span className="text-sm font-medium text-gray-600 dark:text-gray-400">
 								Filter by:
 							</span>
@@ -261,7 +261,7 @@ export default function Dashboard() {
 
 					{isLoading ? (
 						<div className="flex justify-center items-center py-12 text-gray-500 dark:text-gray-400">
-							<Loader2 className="animate-spin h-6 w-6 mr-2" />
+							<Loader2 className="animate-spin h-6 w-6 mr-2 z-10" />
 							Loading tasks...
 						</div>
 					) : tasks.length === 0 ? (
@@ -323,12 +323,12 @@ export default function Dashboard() {
 				</div>
 			</div>
 
-			{/* Task Form Sidebar - 1/3 width on lg screens */}
+			{/* Task Form Sidebar */}
 			<div className="hidden lg:block lg:col-span-1">
 				<div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl shadow-lg p-6 border border-gray-200/50 dark:border-gray-700/50 sticky top-6">
 					<div className="flex items-center space-x-3 mb-6">
 						<div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-500 rounded-lg flex items-center justify-center flex-shrink-0">
-							<Plus className="w-5 h-5 text-white" />
+							<Plus className="w-5 h-5 text-white z-10" />
 						</div>
 						<h3 className="text-lg font-semibold text-gray-900 dark:text-white">
 							Create New Task

@@ -58,7 +58,7 @@ export default function TaskList({ tasks, onDeleted, onToggled }: any) {
 								}`}
 							>
 								{t.completed && (
-									<CheckCircle className="w-3.5 h-3.5" />
+									<CheckCircle className="w-3.5 h-3.5 z-10" />
 								)}
 							</button>
 
@@ -90,7 +90,7 @@ export default function TaskList({ tasks, onDeleted, onToggled }: any) {
 											priorityColors[t.priority]
 										}`}
 									>
-										<Flag className="w-3 h-3" />
+										<Flag className="w-3 h-3 z-10" />
 										<span>{t.priority}</span>
 									</span>
 
@@ -113,7 +113,7 @@ export default function TaskList({ tasks, onDeleted, onToggled }: any) {
 									{/* Due Date */}
 									{t.dueDate && (
 										<span className="inline-flex items-center space-x-1 px-2.5 py-1 rounded-lg text-xs font-medium bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-600">
-											<Calendar className="w-3 h-3" />
+											<Calendar className="w-3 h-3 z-10" />
 											<span>
 												{new Date(
 													t.dueDate
@@ -132,14 +132,14 @@ export default function TaskList({ tasks, onDeleted, onToggled }: any) {
 								className="p-2 rounded-lg text-gray-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:text-blue-400 dark:hover:bg-blue-900/20 transition-colors duration-200"
 								title="Edit Task"
 							>
-								<Pencil className="w-4 h-4" />
+								<Pencil className="w-4 h-4 z-10" />
 							</Link>
 							<button
 								onClick={() => deleteTask(t._id)}
 								className="p-2 rounded-lg text-gray-400 hover:text-red-600 hover:bg-red-50 hover:cursor-pointer dark:hover:text-red-400 dark:hover:bg-red-900/20 transition-colors duration-200"
 								title="Delete Task"
 							>
-								<Trash2 className="w-4 h-4" />
+								<Trash2 className="w-4 h-4 z-10" />
 							</button>
 						</div>
 					</div>

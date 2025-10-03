@@ -82,7 +82,7 @@ export default function TaskDetail() {
 	if (isLoading) {
 		return (
 			<div className="flex justify-center items-center py-20 text-gray-500 dark:text-gray-400">
-				<Loader2 className="animate-spin h-6 w-6 mr-2" />
+				<Loader2 className="animate-spin h-6 w-6 mr-2 z-10" />
 				Loading task details...
 			</div>
 		);
@@ -98,7 +98,7 @@ export default function TaskDetail() {
 					onClick={() => navigate("/")}
 					className="flex items-center space-x-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:cursor-pointer transition-colors text-sm"
 				>
-					<ArrowLeft className="w-4 h-4" />
+					<ArrowLeft className="w-4 h-4 z-10" />
 					<span>Back to Dashboard</span>
 				</button>
 			</div>
@@ -140,13 +140,13 @@ export default function TaskDetail() {
 										: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300 border border-red-200 dark:border-red-800"
 								}`}
 							>
-								<Flag className="w-3 h-3" />
+								<Flag className="w-3 h-3 z-10" />
 								<span>{task.priority}</span>
 							</span>
 
 							{task.dueDate && (
 								<span className="inline-flex items-center space-x-1 px-3 py-1 rounded-lg text-sm font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-600">
-									<Calendar className="w-3 h-3" />
+									<Calendar className="w-3 h-3 z-10" />
 									<span>
 										Due{" "}
 										{dayjs(task.dueDate).format(
@@ -189,7 +189,7 @@ export default function TaskDetail() {
 					<div className="grid grid-cols-1 md:grid-cols-3 gap-3">
 						<div className="space-y-1.5">
 							<label className="text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wide flex items-center space-x-1">
-								<Flag className="w-3 h-3" />
+								<Flag className="w-3 h-3 z-10" />
 								<span>Priority</span>
 							</label>
 							<select
@@ -204,7 +204,7 @@ export default function TaskDetail() {
 
 						<div className="space-y-1.5">
 							<label className="text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wide flex items-center space-x-1">
-								<Circle className="w-3 h-3" />
+								<Circle className="w-3 h-3 z-10" />
 								<span>Status</span>
 							</label>
 							<select
@@ -219,7 +219,7 @@ export default function TaskDetail() {
 
 						<div className="space-y-1.5">
 							<label className="text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wide flex items-center space-x-1">
-								<Calendar className="w-3 h-3" />
+								<Calendar className="w-3 h-3 z-10" />
 								<span>Due Date</span>
 							</label>
 							<input
@@ -237,7 +237,7 @@ export default function TaskDetail() {
 							disabled={isSubmitting}
 							className="flex-1 flex items-center justify-center space-x-2 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-medium py-2.5 px-4 rounded-xl shadow-lg transform hover:cursor-pointer transition-all duration-200 disabled:opacity-50 disabled:hover:scale-100 disabled:cursor-not-allowed text-sm"
 						>
-							<Save className="w-4 h-4" />
+							<Save className="w-4 h-4 z-10" />
 							<span>
 								{isSubmitting ? "Saving..." : "Save Changes"}
 							</span>
@@ -247,7 +247,7 @@ export default function TaskDetail() {
 							onClick={() => navigate("/")}
 							className="flex items-center justify-center space-x-2 py-2.5 px-4 text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 rounded-xl hover:bg-gray-200 hover:cursor-pointer dark:hover:bg-gray-600 transition-all duration-200 font-medium text-sm"
 						>
-							<X className="w-4 h-4" />
+							<X className="w-4 h-4 z-10" />
 							<span>Cancel</span>
 						</button>
 					</div>

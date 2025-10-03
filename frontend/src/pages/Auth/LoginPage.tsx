@@ -44,7 +44,7 @@ export default function LoginPage() {
 						Email Address
 					</label>
 					<div className="relative">
-						<Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+						<Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400 z-10" />
 						<input
 							{...register("email")}
 							type="email"
@@ -65,7 +65,7 @@ export default function LoginPage() {
 						Password
 					</label>
 					<div className="relative">
-						<Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+						<Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400 z-10" />
 						<input
 							type={showPassword ? "text" : "password"}
 							{...register("password")}
@@ -78,9 +78,9 @@ export default function LoginPage() {
 							className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
 						>
 							{showPassword ? (
-								<EyeOff className="h-5 w-5" />
+								<EyeOff className="h-5 w-5 z-10" />
 							) : (
-								<Eye className="h-5 w-5" />
+								<Eye className="h-5 w-5 z-10" />
 							)}
 						</button>
 					</div>
@@ -97,7 +97,7 @@ export default function LoginPage() {
 				disabled={isSubmitting}
 				className="w-full flex items-center justify-center space-x-3 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-4 px-6 rounded-xl shadow-lg transform transition-all duration-200 hover:scale-105 active:scale-95 disabled:opacity-50 disabled:hover:scale-100 disabled:cursor-not-allowed"
 			>
-				<LogIn className="w-5 h-5" />
+				<LogIn className="w-5 h-5 z-10" />
 				<span>{isSubmitting ? "Signing In..." : "Sign In"}</span>
 			</button>
 

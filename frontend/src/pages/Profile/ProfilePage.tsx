@@ -55,7 +55,7 @@ export default function ProfilePage() {
 
 						{user?.createdAt && (
 							<p className="text-gray-500 dark:text-gray-500 text-xs mt-1 flex items-center space-x-1">
-								<Calendar className="w-3 h-3" />
+								<Calendar className="w-3 h-3 z-10" />
 								<span>
 									Joined{" "}
 									{new Date(
@@ -72,7 +72,7 @@ export default function ProfilePage() {
 					{/* Name Field */}
 					<div className="space-y-2">
 						<label className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center space-x-2">
-							<User className="w-4 h-4" />
+							<User className="w-4 h-4 z-10" />
 							<span>Full Name</span>
 						</label>
 						<input
@@ -87,7 +87,7 @@ export default function ProfilePage() {
 					{/* Email Field (Read-only) */}
 					<div className="space-y-2">
 						<label className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center space-x-2">
-							<Mail className="w-4 h-4" />
+							<Mail className="w-4 h-4 z-10" />
 							<span>Email Address</span>
 							<p className="text-xs text-gray-500 dark:text-gray-400">
 								( Email address cannot be changed )
@@ -103,7 +103,7 @@ export default function ProfilePage() {
 					{/* Bio Field */}
 					<div className="space-y-2">
 						<label className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center space-x-2">
-							<FileText className="w-4 h-4" />
+							<FileText className="w-4 h-4 z-10" />
 							<span>Bio</span>
 							<p className="text-xs text-gray-500 dark:text-gray-400">
 								( Brief description for your profile )
@@ -125,7 +125,7 @@ export default function ProfilePage() {
 						disabled={isSubmitting}
 						className="w-full flex items-center justify-center space-x-2 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-3.5 px-6 rounded-xl shadow-lg transform hover:scale-105 transition-all duration-200 disabled:opacity-50 disabled:hover:scale-100 disabled:cursor-not-allowed"
 					>
-						<Save className="w-5 h-5" />
+						<Save className="w-5 h-5 z-10" />
 						<span>
 							{isSubmitting ? "Saving..." : "Save Changes"}
 						</span>
